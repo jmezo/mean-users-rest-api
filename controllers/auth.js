@@ -1,4 +1,5 @@
 const { validationResult } = require('express-validator');
+const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
 
@@ -26,4 +27,26 @@ exports.signup = (req, res, next) => {
   .catch((err) => {
     next(err);
   });
+}
+
+exports.login = async (req, res, next) => {
+  const email = req.body.email;
+  const password = req.body.password;
+
+  const loadedUser = await User.findOne({ email: email });
+  if (!loadedUser || loadedUser.password !== password) {
+    const error = new Error('wrong email or password');
+    error.statusCode = 401;
+    throw error;
+  }
+  const token = jwt.sign(
+    {
+      email: loadedUser.email,
+      userId: loadedUser._id.toString(),
+      role: loadedUser.role
+    },
+    'secret',
+    { expiresIn: '1h' }
+  );
+  res.status(200).json({ token: token, userId: loadedUser._id });
 }
