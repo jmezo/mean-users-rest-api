@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 const authRoutes = require('./routes/auth');
+const usersRoutes = require('./routes/users');
 
 app = express();
 app.use(bodyParser.json());
@@ -13,6 +14,7 @@ app.use((_, __, next) => {
 });
 
 app.use('/auth', authRoutes);
+app.use('/users', usersRoutes);
 
 app.use((error, req, res, next) => {
   console.log('logging error: ', error);
