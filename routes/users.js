@@ -10,6 +10,9 @@ router.get('/users', usersController.getUsers);
 router.put(
   '/user',
   [
+    body()
+      .custom((body, { req }) => body.role === 'admin' || req.userId == body.userId)
+      .withMessage('not authorized'),
     body('userId')
       .custom((value) => {
         return User.findById(value)
