@@ -51,7 +51,6 @@ exports.deleteUser = async (req, res, next) => {
   }
 }
 
-
 const encryptPassword = (pw) => {
   if (!pw) return undefined;
   const salt = bcrypt.genSaltSync();
