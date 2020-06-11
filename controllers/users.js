@@ -32,6 +32,25 @@ exports.updateUser = async (req, res, next) => {
   }
 }
 
+exports.deleteUser = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const error = new Error('validation failed');
+    error.statusCode = 422;
+    error.data = errors.array();
+    return next(error);
+  }
+  try {
+    await User.findByIdAndDelete(req.body.userId);
+    res.status(200).json({message: 'user deleted', userId: user._id.toString()});
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+}
+
 
 const encryptPassword = (pw) => {
   if (!pw) return undefined;

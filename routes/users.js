@@ -33,8 +33,17 @@ router.put(
           }
         });
       })
-  ],
-  usersController.updateUser
+    ],
+    usersController.updateUser
+  );
+
+  router.delete(
+    '/user',
+    [
+      body()
+      .custom((body, { req }) => body.role === 'admin' || req.userId == body.userId)
+    ],
+    usersController.deleteUser
   );
 
 module.exports = router;
