@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
 
+import { AuthService } from '../services/auth.service';
+
 @Component({
   selector: 'app-signup',
   template: `
@@ -45,13 +47,13 @@ import { FormGroup, FormControl, Validators, ValidatorFn, ValidationErrors } fro
 
 export class SignupComponent implements OnInit {
   signupForm = new FormGroup({
-    email: new FormControl('', [Validators.email, Validators.required]),
-    name: new FormControl('', [Validators.maxLength(12)]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    name: new FormControl('', [Validators.required, Validators.maxLength(12)]),
     password: new FormControl('', [Validators.required, Validators.maxLength(12)]),
     passwordAgain: new FormControl('', [Validators.required, Validators.maxLength(12)]),
   }, { validators: passwordMatchValidator });
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() { }
 
@@ -59,6 +61,10 @@ export class SignupComponent implements OnInit {
     if (!this.signupForm.valid) {
       return;
     }
+
+    const obs = this.authService
+    .signup(this.signupForm.get('email').value, this.signupForm.get('name').value, this.signupForm.get('password').value);
+    obs.subscribe((resData) => console.log(resData));
 
     console.log('register user');
 
