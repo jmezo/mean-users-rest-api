@@ -7,7 +7,7 @@ const usersRoutes = require('./routes/users');
 
 const authGuard = require('./middleware/auth-guard');
 
-app = express();
+const app = express();
 app.use(bodyParser.json());
 
 app.use((_, __, next) => {
