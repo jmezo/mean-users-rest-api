@@ -1,4 +1,6 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+import Role from './role';
+
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -17,6 +19,8 @@ const userSchema = new Schema({
   },
   role: {
     type: String,
+    enum: [Role.user, Role.admin],
+    default: Role.user,
     required: true,
   }
 });
