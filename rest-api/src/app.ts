@@ -1,21 +1,22 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
+import express from 'express';
+import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
 
-const authRoutes = require('./routes/auth');
-const usersRoutes = require('./routes/users');
+import authRoutes from './routes/auth';
+import usersRoutes from './routes/users';
 
-const authGuard = require('./middleware/auth-guard');
+import authGuard from './middleware/auth-guard';
+import errorHandler from './middleware/error-handler';
 
 const app = express();
 app.use(bodyParser.json());
 
-app.use((_, __, next) => {
+app.use((_req, _res, next) => {
   console.log('connected');
   next();
 });
 
-app.use((req, res, next) => {
+app.use((_req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader(
     'Access-Control-Allow-Methods',
@@ -28,13 +29,7 @@ app.use((req, res, next) => {
 app.use('/auth', authRoutes);
 app.use('/users', authGuard, usersRoutes);
 
-app.use((error, req, res, next) => {
-  console.log('logging error: ', error);
-  const statusCode = error.statusCode || 500;
-  const message = error.message;
-  const data = error.data;
-  res.status(statusCode).json({ message: message, data: data});
-});
+app.use(errorHandler);
 
 mongoose.connect('mongodb://localhost:27017/mean-users', {useNewUrlParser: true, useUnifiedTopology: true})
 .then((_) => {
