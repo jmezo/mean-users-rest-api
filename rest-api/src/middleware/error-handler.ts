@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response} from 'express';
 
+// TODO change param error: HttpError
 const errorHandler = (error: any, _req: Request, res: Response, _next: NextFunction) => {
   console.log('logging error: ', error);
   const statusCode = error.statusCode || 500;
