@@ -1,21 +1,12 @@
 import express, { Router } from 'express';
-import mongoose from 'mongoose';
 
 import config from './config';
+import init from './loaders';
 
 async function startServer() {
   const app = express();
 
-  app.get('/status', (req, res) => {
-    res.status(200).end();
-  });
-
-  try {
-    await mongoose.connect(config.databaseUri, {useNewUrlParser: true, useUnifiedTopology: true});
-    console.log('connected to database');
-  } catch (e) {
-    console.log(e);
-  }
+  await init({ expressApp: app});
 
   app.listen(config.port, (err) => {
     if (err) {

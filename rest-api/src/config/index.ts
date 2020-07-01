@@ -1,7 +1,6 @@
 import dotenv from 'dotenv';
 
 const result = dotenv.config();
-console.log(result);
 if (result.error) {
   throw new Error("couldn't find .env file");
 }
