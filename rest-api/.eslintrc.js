@@ -14,5 +14,6 @@ module.exports = {
   },
   rules: {
     'new-cap': 0,
+    'require-jsdoc': false,
   },
 };

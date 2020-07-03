@@ -3,9 +3,6 @@ import express from 'express';
 import config from './config';
 import init from './loaders';
 
-/**
-* Initializes and starts the server
-*/
 async function startServer() {
   const app = express();
 
