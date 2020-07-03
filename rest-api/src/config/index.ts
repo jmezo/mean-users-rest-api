@@ -8,4 +8,7 @@ if (result.error) {
 export default {
   port: parseInt(process.env.PORT),
   databaseUri: process.env.MONGODB_URI,
+  api: {
+    prefix: '/api'
+  }
 }
