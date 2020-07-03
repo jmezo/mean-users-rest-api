@@ -8,4 +8,4 @@ export default async (expressApp: express.Application): Promise<void> => {
   console.log('MongoDB initialized');
   await expressLoader(expressApp);
   console.log('Express initialized');
-}
+};

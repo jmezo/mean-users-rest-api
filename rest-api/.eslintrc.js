@@ -7,8 +7,12 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
+    'google',
   ],
   env: {
-    node: true
-  }
+    node: true,
+  },
+  rules: {
+    'new-cap': 0,
+  },
 };

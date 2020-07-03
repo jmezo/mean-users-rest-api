@@ -17,4 +17,4 @@ export default (app: express.Application): express.Application => {
   app.use(config.api.prefix, routes());
 
   return app;
-}
+};

@@ -1,6 +1,6 @@
-import { Router } from "express";
+import {Router} from 'express';
 
 export default (): Router => {
   const app = Router();
   return app;
-}
+};
