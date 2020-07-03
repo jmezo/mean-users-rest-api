@@ -1,4 +1,4 @@
-import express, { Router } from 'express';
+import express from 'express';
 
 import config from './config';
 import init from './loaders';
@@ -6,7 +6,7 @@ import init from './loaders';
 async function startServer() {
   const app = express();
 
-  await init({ expressApp: app});
+  await init(app);
 
   app.listen(config.port, (err) => {
     if (err) {
